@@ -1,37 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
-  Content, Card, Text, H1, H3,
+  Content, Card, Text, H1, Spinner,
 } from 'native-base';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { StyleSheet } from 'react-native';
 
-import { TOMATO } from '../constants/colors';
+import { fetchDecksRequest } from '../actions/decksActions';
+import { TOMATO, GREY } from '../constants/colors';
 
-const data = [
-  { id: 1, name: 'Deck 1', cards: 10 },
-  { id: 2, name: 'Deck 2', cards: 4 },
-  { id: 3, name: 'Deck 3', cards: 4 },
-  { id: 4, name: 'Deck 4', cards: 4 },
-  { id: 5, name: 'Deck 5', cards: 4 },
-  { id: 6, name: 'Deck 6', cards: 4 },
-  { id: 7, name: 'Deck 7', cards: 8 },
-  { id: 8, name: 'Deck 8', cards: 2 },
-];
+class DecksScreen extends Component {
+  static propTypes = {
+    loading: PropTypes.bool.isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchDecksRequest: PropTypes.func.isRequired,
+  };
 
-const DecksScreen = () => (
-  <Content padder>
-    {data.map(d => (
-      <Card key={d.id}>
-        <Text style={{ textAlign: 'center', paddingTop: 30 }}>
-          <H1>{d.name}</H1>
-        </Text>
-        <Text style={{ textAlign: 'center', paddingBottom: 20 }}>
-          <H3>
-            Total Cards:
-            {d.cards}
-          </H3>
-        </Text>
-      </Card>
-    ))}
-  </Content>
-);
+  componentDidMount() {
+    const { fetchDecksRequest } = this.props;
+    fetchDecksRequest();
+  }
 
-export default DecksScreen;
+  render() {
+    const { loading, data } = this.props;
+    const { noDeck, deckTitle, cardsCount } = styles;
+
+    if (loading) return <Spinner color={TOMATO} />;
+
+    if (!data.length) {
+      return (
+        <Content padder>
+          <Card style={noDeck}>
+            <Text>
+              <H1>
+                You have no decks currently created. Please go to the new deck screen to add one.
+              </H1>
+            </Text>
+          </Card>
+        </Content>
+      );
+    }
+
+    return (
+      <Content padder>
+        {data.map(({ id, title, questions }) => (
+          <Card key={id}>
+            <Text style={deckTitle}>
+              <H1>{title}</H1>
+            </Text>
+            <Text style={cardsCount}>{`${questions.length} Card(s)`}</Text>
+          </Card>
+        ))}
+      </Content>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  noDeck: { padding: 30, textAlign: 'center' },
+  deckTitle: { paddingTop: 30, textAlign: 'center' },
+  cardsCount: {
+    paddingTop: 5,
+    paddingBottom: 30,
+    fontSize: 14,
+    color: GREY,
+    textAlign: 'center',
+  },
+});
+
+const mapStateToProps = ({ decks }) => ({ loading: decks.loading, data: decks.data });
+
+export default connect(
+  mapStateToProps,
+  { fetchDecksRequest },
+)(DecksScreen);

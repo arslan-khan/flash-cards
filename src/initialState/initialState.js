@@ -1,6 +1,8 @@
 const initialState = {
-  decks: [],
-  loading: false,
+  decks: {
+    data: [],
+    loading: false,
+  },
 };
 
 export { initialState };

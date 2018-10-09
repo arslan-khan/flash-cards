@@ -4,7 +4,6 @@ import { Icon } from 'native-base';
 
 import DecksScreen from '../screens/DecksScreen';
 import NewDeckScreen from '../screens/NewDeckScreen';
-import NewQuestionScreen from '../screens/NewQuestionScreen';
 import { TOMATO, GREY } from '../constants/colors';
 
 const BottomTabNavigator = createBottomTabNavigator(
@@ -25,13 +24,6 @@ const BottomTabNavigator = createBottomTabNavigator(
         tabBarIcon: ({ tintColor }) => (
           <Icon name="basket" size={24} style={{ color: tintColor }} />
         ),
-      },
-    },
-    NewQuestion: {
-      screen: NewQuestionScreen,
-      navigationOptions: {
-        tabBarLabel: 'New Question',
-        tabBarIcon: ({ tintColor }) => <Icon name="book" size={24} style={{ color: tintColor }} />,
       },
     },
   },
