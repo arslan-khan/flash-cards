@@ -30,11 +30,9 @@ class DecksScreen extends Component {
     if (!data.length) {
       return (
         <Content padder>
-          <Card style={noDeck}>
-            <Text>
-              <H1>
-                You have no decks currently created. Please go to the new deck screen to add one.
-              </H1>
+          <Card>
+            <Text style={noDeck}>
+              You have no decks currently created. Please go to the new deck screen to create one.
             </Text>
           </Card>
         </Content>
@@ -57,7 +55,15 @@ class DecksScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  noDeck: { padding: 30, textAlign: 'center' },
+  noDeck: {
+    paddingTop: 60,
+    paddingBottom: 60,
+    paddingRight: 20,
+    paddingLeft: 20,
+    textAlign: 'center',
+    fontSize: 20,
+    color: GREY,
+  },
   deckTitle: { paddingTop: 30, textAlign: 'center' },
   cardsCount: {
     paddingTop: 5,

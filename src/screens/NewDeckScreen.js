@@ -22,8 +22,7 @@ class NewDeckScreen extends Component {
     this.props.addNewDeckRequest(this.state.title);
     Toast.show({
       text: 'You have successfully created a New Deck.',
-      type: 'success',
-      duration: 5000,
+      duration: 3000,
     });
   };
 

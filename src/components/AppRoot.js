@@ -32,7 +32,7 @@ class AppRoot extends Component {
     }
 
     return (
-      <Container>
+      <Container style={{ backgroundColor: '#f8f8f8' }}>
         <Header style={{ backgroundColor: TOMATO }}>
           <Left />
           <Body>
