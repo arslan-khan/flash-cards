@@ -27,5 +27,6 @@ module.exports = {
     'no-use-before-define': 0,
     'react/destructuring-assignment': 0,
     'import/prefer-default-export': 0,
+    'no-shadow': 0,
   },
 };
