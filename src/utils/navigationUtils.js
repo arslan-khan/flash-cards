@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from 'react-navigation';
 import { Icon } from 'native-base';
 
 import DecksScreen from '../screens/DecksScreen';
-import QuizScreen from '../screens/QuizScreen';
 import NewDeckScreen from '../screens/NewDeckScreen';
 import NewQuestionScreen from '../screens/NewQuestionScreen';
 import { TOMATO, GREY } from '../constants/colors';
@@ -16,15 +15,6 @@ const BottomTabNavigator = createBottomTabNavigator(
         tabBarLabel: 'Decks',
         tabBarIcon: ({ tintColor }) => (
           <Icon name="albums" size={24} style={{ color: tintColor }} />
-        ),
-      },
-    },
-    Quiz: {
-      screen: QuizScreen,
-      navigationOptions: {
-        tabBarLabel: 'Quiz',
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="chatbubbles" size={24} style={{ color: tintColor }} />
         ),
       },
     },

@@ -1,4 +1,5 @@
-const TOMATO = 'tomato';
 const GREY = 'grey';
+const TOMATO = 'tomato';
+const WHITE = 'white';
 
-export { TOMATO, GREY };
+export { GREY, TOMATO, WHITE };
