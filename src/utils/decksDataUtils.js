@@ -3,34 +3,6 @@ import { AsyncStorage } from 'react-native';
 import { DECKS_KEY } from '../constants/keys';
 import { generateUID } from './dataGeneratorUtils';
 
-// const dummyData = JSON.stringify([
-//   {
-//     id: generateUID(),
-//     title: 'React',
-//     questions: [
-//       {
-//         question: 'What is React?',
-//         answer: 'A library for managing user interfaces',
-//       },
-//       {
-//         question: 'Where do you make Ajax requests in React?',
-//         answer: 'The componentDidMount lifecycle event',
-//       },
-//     ],
-//   },
-//   {
-//     id: generateUID(),
-//     title: 'JavaScript',
-//     questions: [
-//       {
-//         question: 'What is a closure?',
-//         answer:
-//           'The combination of a function and the lexical environment within which that function was declared.',
-//       },
-//     ],
-//   },
-// ]);
-
 const getDecks = () => new Promise(async (res) => {
   const data = await AsyncStorage.getItem(DECKS_KEY);
   const decks = JSON.parse(data) || [];
@@ -42,7 +14,7 @@ const getDecks = () => new Promise(async (res) => {
 
 const getDeck = id => new Promise(async (res) => {
   const decks = await AsyncStorage.getItem(DECKS_KEY);
-  const deck = decks.find(deck => deck.id === id);
+  const deck = JSON.parse(decks).find(deck => deck.id === id);
   setTimeout(() => {
     res(deck);
   }, 1000);
@@ -66,4 +38,19 @@ const addNewDeck = async (title) => {
   return AsyncStorage.setItem(DECKS_KEY, JSON.stringify(newDecks));
 };
 
-export { getDecks, getDeck, addNewDeck };
+const addNewCard = async (card, deckId) => {
+  const decks = await AsyncStorage.getItem(DECKS_KEY);
+  const updatedDecks = JSON.parse(decks).map((deck) => {
+    if (deck.id === deckId) {
+      deck.questions.push(card);
+      return deck;
+    }
+    return deck;
+  });
+
+  return AsyncStorage.setItem(DECKS_KEY, JSON.stringify(updatedDecks));
+};
+
+export {
+  getDecks, getDeck, addNewDeck, addNewCard,
+};
