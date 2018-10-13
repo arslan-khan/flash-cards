@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Content, Card, Text, H1, Spinner,
+  Content, Card, Text, H1, Spinner, Button,
 } from 'native-base';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +14,7 @@ class DecksScreen extends Component {
     loading: PropTypes.bool.isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     fetchDecksRequest: PropTypes.func.isRequired,
+    navigation: PropTypes.shape({}).isRequired,
   };
 
   componentDidMount() {
@@ -22,8 +23,10 @@ class DecksScreen extends Component {
   }
 
   render() {
-    const { loading, data } = this.props;
-    const { noDeck, deckTitle, cardsCount } = styles;
+    const { loading, data, navigation } = this.props;
+    const {
+      noDeck, deckTitle, cardsCount, button,
+    } = styles;
 
     if (loading) return <Spinner color={TOMATO} />;
 
@@ -47,6 +50,18 @@ class DecksScreen extends Component {
               <H1>{title}</H1>
             </Text>
             <Text style={cardsCount}>{`${questions.length} Card(s)`}</Text>
+            <Button
+              rounded
+              style={button}
+              danger
+              onPress={() => navigation.navigate({
+                routeName: 'Deck',
+                params: { id },
+              })
+              }
+            >
+              <Text>View Cards</Text>
+            </Button>
           </Card>
         ))}
       </Content>
@@ -71,6 +86,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: GREY,
     textAlign: 'center',
+  },
+  button: {
+    marginBottom: 30,
+    alignSelf: 'center',
   },
 });
 

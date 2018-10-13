@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Font, AppLoading } from 'expo';
-import {
-  Container, Header, Left, Body, Title, Root, Right,
-} from 'native-base';
+import { Container, Root } from 'native-base';
 
-import BottomTabNavigator from '../utils/navigationUtils';
-import { TOMATO, WHITE } from '../constants/colors';
+import MainNavigator from '../utils/navigationUtils';
 
 class AppRoot extends Component {
   state = { loading: true };
@@ -23,7 +20,9 @@ class AppRoot extends Component {
   }
 
   render() {
-    if (this.state.loading) {
+    const { loading } = this.state;
+
+    if (loading) {
       return (
         <Root>
           <AppLoading />
@@ -33,15 +32,7 @@ class AppRoot extends Component {
 
     return (
       <Container style={{ backgroundColor: '#f8f8f8' }}>
-        <Header style={{ backgroundColor: TOMATO }}>
-          <Left />
-          <Body>
-            <Title style={{ color: WHITE }}>Flash Cards</Title>
-          </Body>
-          <Right />
-        </Header>
-
-        <BottomTabNavigator />
+        <MainNavigator />
       </Container>
     );
   }
