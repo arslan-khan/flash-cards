@@ -26,9 +26,9 @@ class AddCardScreen extends Component {
 
   questionInputHandler = question => this.setState(() => ({ question }));
 
-  yesClickHandler = () => this.setState(() => ({ yesAnswer: true, noAnswer: false, answer: 'yes' }));
+  yesClickHandler = () => this.setState(() => ({ yesAnswer: true, noAnswer: false, answer: 'Yes' }));
 
-  noClickHandler = () => this.setState(() => ({ yesAnswer: false, noAnswer: true, answer: 'no' }));
+  noClickHandler = () => this.setState(() => ({ yesAnswer: false, noAnswer: true, answer: 'No' }));
 
   onPressHandler = () => {
     const { deckId, addNewCardRequest, navigation } = this.props;
@@ -39,6 +39,7 @@ class AddCardScreen extends Component {
     Toast.show({
       text: 'You have successfully added a New Card.',
       duration: 3000,
+      buttonText: 'OK',
     });
 
     navigation.dispatch(

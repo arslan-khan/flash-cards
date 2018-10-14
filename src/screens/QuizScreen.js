@@ -8,7 +8,9 @@ import { StyleSheet } from 'react-native';
 import FlipCard from 'react-native-flip-card';
 
 import { fetchDeckRequest } from '../actions/decksActions';
-import { TOMATO, GREY } from '../constants/colors';
+import {
+  TOMATO, GREY, GREEN, GOLDEN,
+} from '../constants/colors';
 
 class QuizScreen extends Component {
   static defaultProps = { selectedDeck: null };
@@ -52,12 +54,19 @@ class QuizScreen extends Component {
   };
 
   render() {
-    const { loading, selectedDeck } = this.props;
+    const { loading, selectedDeck, navigation } = this.props;
     const {
       currentQuestionNumber, cardFlipped, correctAnswers, InCorrectAnswers,
     } = this.state;
     const {
-      main, secondary, button, count, correctBtn,
+      main,
+      secondary,
+      button,
+      count,
+      correctBtn,
+      correctAnsTxt,
+      inCorrectAnsTxt,
+      result,
     } = styles;
 
     if (loading || !selectedDeck) return <Spinner color={TOMATO} />;
@@ -69,11 +78,25 @@ class QuizScreen extends Component {
       return (
         <Content padder>
           <Card>
-            <Text style={secondary}>{`You got ${correctAnswers} questions correct.`}</Text>
-            <Text style={secondary}>{`You got ${InCorrectAnswers} questions incorrect.`}</Text>
-            <Text style={secondary}>
+            <Text style={correctAnsTxt}>{`You got ${correctAnswers} question(s) correct.`}</Text>
+            <Text style={inCorrectAnsTxt}>
+              {`You got ${InCorrectAnswers} question(s) incorrect.`}
+            </Text>
+            <Text style={result}>
               {`That is a score of ${((correctAnswers / questions.length) * 100).toFixed(2)}%.`}
             </Text>
+
+            <Button
+              rounded
+              style={button}
+              primary
+              onPress={() => navigation.navigate({
+                routeName: 'Home',
+              })
+              }
+            >
+              <Text>Go Back</Text>
+            </Button>
           </Card>
         </Content>
       );
@@ -133,6 +156,26 @@ const styles = StyleSheet.create({
   },
   correctBtn: { marginBottom: 10 },
   count: { paddingLeft: 20, color: GREY, marginBottom: 20 },
+  correctAnsTxt: {
+    marginTop: 30,
+    marginBottom: 5,
+    color: GREEN,
+    padding: 5,
+    textAlign: 'center',
+  },
+  inCorrectAnsTxt: {
+    marginBottom: 5,
+    color: TOMATO,
+    padding: 5,
+    textAlign: 'center',
+  },
+  result: {
+    marginBottom: 5,
+    color: GOLDEN,
+    padding: 5,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
 });
 
 const mapStateToProps = ({ decks }, { navigation }) => ({
