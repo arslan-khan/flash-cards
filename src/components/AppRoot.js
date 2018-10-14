@@ -3,11 +3,12 @@ import { Font, AppLoading } from 'expo';
 import { Container, Root } from 'native-base';
 
 import MainNavigator from '../utils/navigationUtils';
+import { setLocalNotification } from '../utils/notificationsUtils';
 
 class AppRoot extends Component {
   state = { loading: true };
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     await Font.loadAsync({
       // eslint-disable-next-line
       Roboto: require('native-base/Fonts/Roboto.ttf'),
@@ -16,8 +17,9 @@ class AppRoot extends Component {
       // eslint-disable-next-line
       Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'),
     });
-    this.setState({ loading: false });
-  }
+    this.setState(() => ({ loading: false }));
+    setLocalNotification();
+  };
 
   render() {
     const { loading } = this.state;
