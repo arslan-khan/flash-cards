@@ -23,6 +23,7 @@ class NewDeckScreen extends Component {
     Toast.show({
       text: 'You have successfully created a New Deck.',
       duration: 3000,
+      buttonText: 'OK',
     });
   };
 
