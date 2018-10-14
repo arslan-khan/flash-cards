@@ -22,9 +22,11 @@ module.exports = {
   rules: {
     'react-native/no-unused-styles': 2,
     'react-native/split-platform-components': 2,
-    'react-native/no-inline-styles': 2,
+    'react-native/no-inline-styles': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'no-use-before-define': 0,
     'react/destructuring-assignment': 0,
+    'import/prefer-default-export': 0,
+    'no-shadow': 0,
   },
 };

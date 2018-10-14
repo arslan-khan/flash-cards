@@ -1,12 +1,13 @@
 import React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { Icon } from 'native-base';
 
 import DecksScreen from '../screens/DecksScreen';
-import QuizScreen from '../screens/QuizScreen';
 import NewDeckScreen from '../screens/NewDeckScreen';
-import NewQuestionScreen from '../screens/NewQuestionScreen';
-import { TOMATO, GREY } from '../constants/colors';
+import DeckScreen from '../screens/DeckScreen';
+import AddCardScreen from '../screens/AddCardScreen';
+import QuizScreen from '../screens/QuizScreen';
+import { TOMATO, GREY, WHITE } from '../constants/colors';
 
 const BottomTabNavigator = createBottomTabNavigator(
   {
@@ -19,15 +20,6 @@ const BottomTabNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Quiz: {
-      screen: QuizScreen,
-      navigationOptions: {
-        tabBarLabel: 'Quiz',
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="chatbubbles" size={24} style={{ color: tintColor }} />
-        ),
-      },
-    },
     NewDeck: {
       screen: NewDeckScreen,
       navigationOptions: {
@@ -35,13 +27,6 @@ const BottomTabNavigator = createBottomTabNavigator(
         tabBarIcon: ({ tintColor }) => (
           <Icon name="basket" size={24} style={{ color: tintColor }} />
         ),
-      },
-    },
-    NewQuestion: {
-      screen: NewQuestionScreen,
-      navigationOptions: {
-        tabBarLabel: 'New Question',
-        tabBarIcon: ({ tintColor }) => <Icon name="book" size={24} style={{ color: tintColor }} />,
       },
     },
   },
@@ -53,4 +38,50 @@ const BottomTabNavigator = createBottomTabNavigator(
   },
 );
 
-export default BottomTabNavigator;
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: BottomTabNavigator,
+    navigationOptions: () => ({
+      title: 'Flash Cards',
+      headerTintColor: WHITE,
+      headerStyle: {
+        backgroundColor: TOMATO,
+      },
+    }),
+  },
+  Deck: {
+    screen: DeckScreen,
+    path: 'deck/:id',
+    navigationOptions: () => ({
+      title: 'Deck',
+      headerTintColor: WHITE,
+      headerStyle: {
+        backgroundColor: TOMATO,
+      },
+    }),
+  },
+  AddCard: {
+    screen: AddCardScreen,
+    path: 'deck/add-card/:id',
+    navigationOptions: () => ({
+      title: 'Add Card',
+      headerTintColor: WHITE,
+      headerStyle: {
+        backgroundColor: TOMATO,
+      },
+    }),
+  },
+  Quiz: {
+    screen: QuizScreen,
+    path: 'deck/quiz/:id',
+    navigationOptions: () => ({
+      title: 'Quiz',
+      headerTintColor: WHITE,
+      headerStyle: {
+        backgroundColor: TOMATO,
+      },
+    }),
+  },
+});
+
+export default MainNavigator;
